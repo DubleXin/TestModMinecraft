@@ -29,7 +29,7 @@ public class StatusHUD {
                 (int)(140 * hudScale),(int)(60 * hudScale));
 
         guiGraphics.drawString(font,
-                "HP / " + 20,
+                "HP / " + StatusData.get_health(),
                 12, 18,
                 0x666666, false);
     });
