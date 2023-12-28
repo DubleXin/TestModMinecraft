@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "leyer0": "testmod:item/items#xy=0,0"
+  }
+}
