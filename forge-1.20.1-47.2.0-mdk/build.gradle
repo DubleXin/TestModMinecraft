@@ -7,7 +7,7 @@ plugins {
 
 version = '0.0.1-1.20.1'
 group = 'net.mirai.testmod'
-
+mod_id = "testmod"
 base {
     archivesName = 'testmod'
 }
@@ -155,8 +155,8 @@ tasks.named('processResources', ProcessResources).configure {
             minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
             forge_version: forge_version, forge_version_range: forge_version_range,
             loader_version_range: loader_version_range,
-            "testmod": "testmod", mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
-            mod_authors: mod_authors, mod_description: mod_description,
+            mod_id: "testmod", mod_name: "Test Mod", mod_license: mod_license, mod_version: mod_version,
+            mod_authors: 'MIRAI std', mod_description: '_',
     ]
     inputs.properties replaceProperties
 
