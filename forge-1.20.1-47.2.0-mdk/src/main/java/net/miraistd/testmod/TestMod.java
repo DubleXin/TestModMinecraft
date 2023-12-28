@@ -14,6 +14,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.miraistd.testmod.Halberd.Halberd;
 import net.miraistd.testmod.QuestionMarkBlock.QuestionMarkBlock;
+import net.miraistd.testmod.client.StatusData;
 import org.slf4j.Logger;
 import net.minecraft.network.chat.Component;
 
@@ -25,8 +26,7 @@ public class TestMod {
 
     public static void sendMessageToChat(String message) {
         Component message_component = Component.translatable(message);
-        if(Minecraft.getInstance().player != null)
-            Minecraft.getInstance().player.displayClientMessage(message_component, true);
+        StatusData.get_owner().displayClientMessage(message_component, true);
     }
 
     public TestMod() {
