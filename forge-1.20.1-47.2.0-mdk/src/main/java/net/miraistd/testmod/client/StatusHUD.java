@@ -9,7 +9,7 @@ import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 public class StatusHUD {
     public static final ResourceLocation BACKGROUND =
-            new ResourceLocation(TestMod.MOD_ID, "testmod/textures/gui/statusbox.png");
+            new ResourceLocation(TestMod.MOD_ID, "textures/gui/statusbox.png");
     public static final IGuiOverlay STATUS_BOX = ((forgeGui, guiGraphics, v, i, i1) -> {
 
         int x = guiGraphics.guiWidth() /2;

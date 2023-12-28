@@ -16,7 +16,7 @@ public class ClientEvents {
     public static class ClientModBusEvents{
         @SubscribeEvent
         public static void registerGuiOverlays(RegisterGuiOverlaysEvent event){
-            event.registerAboveAll("statusBackground", StatusHUD.STATUS_BOX);
+            event.registerAboveAll("statusbox", StatusHUD.STATUS_BOX);
         }
     }
 }
