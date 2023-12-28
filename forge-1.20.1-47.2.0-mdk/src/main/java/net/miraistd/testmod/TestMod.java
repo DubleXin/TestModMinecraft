@@ -2,7 +2,6 @@ package net.miraistd.testmod;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,22 +15,25 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.miraistd.testmod.Halberd.Halberd;
 import net.miraistd.testmod.QuestionMarkBlock.QuestionMarkBlock;
 import org.slf4j.Logger;
+import net.minecraft.network.chat.Component;
 
-// The value here should match an entry in the META-INF/mods.toml file
+
 @Mod(TestMod.MOD_ID)
 public class TestMod {
-    // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "testmod";
-    // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    // Creates a creative tab with the id "examplemod:example_tab" for the example item, that is placed after the combat tab
+    public static void sendMessageToChat(String message) {
+        Component message_component = Component.translatable(message);
+        if(Minecraft.getInstance().player != null)
+            Minecraft.getInstance().player.displayClientMessage(message_component, true);
+    }
 
     public TestMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         modEventBus.addListener(this::commonSetup);
-
+        modEventBus.addListener(this::addCreativeTab);
         MinecraftForge.EVENT_BUS.register(this);
 
         Halberd.register(modEventBus);
@@ -41,6 +43,7 @@ public class TestMod {
     private void addCreativeTab(BuildCreativeModeTabContentsEvent event){
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
             event.accept(Halberd.HalberdItem);
+            sendMessageToChat("INGREDIENTS");
         }
     }
     private void commonSetup(final FMLCommonSetupEvent event) {
