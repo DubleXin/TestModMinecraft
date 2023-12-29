@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "item/generated",
   "textures": {
-    "leyer0": "testmod:item/items"
+    "layer0": "testmod:item/halberd"
   }
 }
