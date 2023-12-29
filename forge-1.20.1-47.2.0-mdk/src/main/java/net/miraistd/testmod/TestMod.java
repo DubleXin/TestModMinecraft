@@ -14,7 +14,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.miraistd.testmod.Halberd.Halberd;
 import net.miraistd.testmod.QuestionMarkBlock.QuestionMarkBlock;
-import net.miraistd.testmod.client.StatusData;
+import net.miraistd.testmod.client.gui.StatusData;
 import org.slf4j.Logger;
 import net.minecraft.network.chat.Component;
 

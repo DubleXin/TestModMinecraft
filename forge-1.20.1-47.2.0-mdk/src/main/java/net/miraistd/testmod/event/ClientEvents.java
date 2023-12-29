@@ -1,14 +1,11 @@
 package net.miraistd.testmod.event;
 
-import net.minecraft.advancements.critereon.PlayerHurtEntityTrigger;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.miraistd.testmod.TestMod;
-import net.miraistd.testmod.client.StatusData;
-import net.miraistd.testmod.client.StatusHUD;
+import net.miraistd.testmod.client.gui.StatusHUD;
 
 public class ClientEvents {
     @Mod.EventBusSubscriber (
@@ -19,7 +16,7 @@ public class ClientEvents {
     public static class ClientModBusEvents{
         @SubscribeEvent
         public static void registerGuiOverlays(RegisterGuiOverlaysEvent event){
-            event.registerAboveAll("statusbox", StatusHUD.STATUS_BOX);
+            event.registerAboveAll("statusbox", StatusHUD.STATUS_HUD);
         }
     }
 }
