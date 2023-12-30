@@ -1,23 +1,30 @@
 package net.miraistd.testmod.Items;
 
+import lombok.Getter;
+import mirai.action;
+import mirai.pair;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import net.miraistd.testmod.TestMod;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 public class ItemRegisterUtil {
-    Dictionary<String, Integer> ItemsDictionary = new Hashtable<>();
+
+    @Getter
+    private static HashMap<String, pair<RegistryObject<Item>, ICustomItem>> ItemsMap = new HashMap<>();
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, TestMod.MOD_ID);
-    public static void register(IEventBus eventBus){
+    private static void register(IEventBus eventBus){
         ITEMS.register(eventBus);
     }
-    public ItemRegisterUtil(){
-        //ItemsDictionary.put("key", 80085);
-        //ItemsDictionary
+    public static void RegisterItem(action<? extends Item, Void> action, ICustomItem item) {
+        ItemsMap.put(item.getName(),
+                new pair<>(ITEMS.register(item.getName(), ()-> action.Invoke(null)), item));
+        register(TestMod.getModEventBus());
     }
+
 }
