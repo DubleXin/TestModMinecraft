@@ -21,16 +21,7 @@ public class ModEvents {
         @SubscribeEvent
         public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
             Player player = event.getEntity();
-
-            TestMod.LOGGER.info("WANNA LOG IN >> {}", player.getName().getString());
-
             PlayerManager.Connect(player.getName().getString(), player);
-
-            TestMod.LOGGER.info("LOGGED IN >> {}", player.getName().getString());
-
-            TestMod.LOGGER.info("COMPARISON >> {} : {}",
-                    player.getName().getString(),
-                    Minecraft.getInstance().getUser().getName());
 
             String name = event.getEntity().getName().getString();
             Debug.LogAll (

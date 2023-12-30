@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.miraistd.testmod.TestMod;
 import net.miraistd.testmod.client.ExtendedPlayer;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -34,11 +33,11 @@ public class PlayerManager {
         return true;
     }
 
-    public static @Nullable Player GetPlayerByName(String name) {
-        return !_players.contains(name)? null : _players.get(name).getFirst();
+    public static Player GetPlayerByName(String name) {
+        return _players.get(name).getFirst();
     }
-    public static @Nullable ExtendedPlayer GetExtendedPlayerByName(String name) {
-        return !_players.contains(name)? null : _players.get(name).getSecond();
+    public static ExtendedPlayer GetExtendedPlayerByName(String name) {
+        return  _players.get(name).getSecond();
     }
     public static ExtendedPlayer GetExtendedPlayerByPlayer(@NotNull Player player) {
         String name = player.getName().getString();
