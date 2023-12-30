@@ -29,6 +29,5 @@ public class TestMod {
         QuestionMarkBlock.register(modEventBus);
 
         HUD.Register();
-        ExtendedPlayer.Validate();
     }
 }
