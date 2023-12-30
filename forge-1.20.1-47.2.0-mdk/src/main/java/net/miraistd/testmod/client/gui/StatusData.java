@@ -1,23 +1,24 @@
 package net.miraistd.testmod.client.gui;
 
-import lombok.*;
-import net.minecraft.client.*;
-import net.minecraft.world.entity.player.*;
+import lombok.Getter;
+import net.minecraft.world.entity.player.Player;
+import net.miraistd.testmod.client.LevelingData;
 
+@Getter
 public class StatusData {
-    private final static Player _player = Minecraft.getInstance().player;
+    private static Player _player;
 
-    @Getter private static LevelingData _levelingData;
-    @Getter private static float _mana;
+    private LevelingData LevelingData;
+    private float Mana;
 
-    public static float get_health() {
+    public static float getHealth() {
         if(_player == null)
             return 0;
         return _player.getHealth();
     }
 
-    public static Player get_owner() {
-        return _player;
+    public StatusData(Player player) {
+        _player = player;
     }
 }
 

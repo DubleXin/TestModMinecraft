@@ -1,4 +1,4 @@
-package net.miraistd.testmod.client.gui;
+package net.miraistd.testmod.client;
 
 public record LevelingData() {
     private static int _level;
