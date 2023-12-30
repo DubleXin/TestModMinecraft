@@ -1,16 +1,22 @@
 package net.miraistd.testmod.client.gui.core;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.miraistd.testmod.client.ExtendedPlayer;
+import net.miraistd.testmod.TestMod;
 import net.miraistd.testmod.client.gui.StatusData;
 import net.miraistd.testmod.client.gui.StatusHUD;
+import net.miraistd.testmod.player.PlayerManager;
 
 public class HUD {
     public static StatusHUD StatusHUDInstance;
     public static final IGuiOverlay RENDER = ((forgeGui, guiGraphics, v, i, i1) -> {
 
+        final var extendedPlayer = PlayerManager.GetExtendedPlayerByName(Minecraft.getInstance().getUser().getName());
+        TestMod.LOGGER.info("IS NEWFOUND EXTENDED_PLAYER NULL? >> {}", extendedPlayer == null);
+        if(extendedPlayer == null)
+            return;
         final var font = forgeGui.getFont();
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -29,7 +35,8 @@ public class HUD {
 
         //region STATUS DATA CACHE
 
-        final var statusData = ExtendedPlayer.getStatusData();
+        assert extendedPlayer != null;
+        final var statusData = extendedPlayer.getStatusData();
 
         final var levelingData = statusData.getLevelingData();
         final var health = StatusData.getHealth();

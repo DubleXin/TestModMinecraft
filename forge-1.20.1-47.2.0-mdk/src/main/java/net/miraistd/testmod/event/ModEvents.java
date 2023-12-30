@@ -1,20 +1,18 @@
 package net.miraistd.testmod.event;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.miraistd.testmod.Items.Halberd.Halberd;
 import net.miraistd.testmod.TestMod;
-import net.miraistd.testmod.client.ExtendedPlayer;
 import net.miraistd.testmod.client.gui.core.HUD;
+import net.miraistd.testmod.player.PlayerManager;
 import net.miraistd.testmod.utils.Debug;
 
 public class ModEvents {
@@ -22,28 +20,55 @@ public class ModEvents {
     public static class ForgeEvents{
         @SubscribeEvent
         public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
-            if(ExtendedPlayer.getPlayer() == null ||
-                    !event.getEntity().getUUID().equals(ExtendedPlayer.getPlayer().getUUID()))
-                ExtendedPlayer.Reset();
-            else{
-                String name = event.getEntity().getName().getString();
-                Debug.Log(ExtendedPlayer.getPlayer(),">> " + name + " Logged In");
-            }
+            Player player = event.getEntity();
+
+            TestMod.LOGGER.info("WANNA LOG IN >> {}", player.getName().getString());
+
+            PlayerManager.Connect(player.getName().getString(), player);
+
+            TestMod.LOGGER.info("LOGGED IN >> {}", player.getName().getString());
+
+            TestMod.LOGGER.info("COMPARISON >> {} : {}",
+                    player.getName().getString(),
+                    Minecraft.getInstance().getUser().getName());
+
+            String name = event.getEntity().getName().getString();
+            Debug.LogAll (
+                    new Player[]{event.getEntity()},
+                    ">> " + name + " logged in"
+            );
         }
         @SubscribeEvent
-        public static void onPlayerJoinWorld(EntityJoinLevelEvent event) {
-            if(ExtendedPlayer.getPlayer() == null)
-                ExtendedPlayer.Reset();
+        public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
+            Player player = event.getEntity();
+            TestMod.LOGGER.info("WANNA LOG OUT >> {}", player.getName().getString());
+            boolean successfullyDisconnected = PlayerManager.Disconnect(player.getName().getString());
+
+            if(!successfullyDisconnected) {
+                //TODO: Introduce emergency data salvation
+                TestMod.LOGGER.info("LOGGED OUT WITH NO USE >> {}", player.getName().getString());
+                return;
+            }
+
+            TestMod.LOGGER.info("LOGGED OUT >> {}", player.getName().getString());
+
+            String name = event.getEntity().getName().getString();
+            Debug.LogAll (
+                    new Player[]{event.getEntity()},
+                    ">> " + name + " logged out"
+            );
         }
         @SubscribeEvent
         public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
-            if(!event.getEntity().getUUID().equals(ExtendedPlayer.getPlayer().getUUID()))
+            PlayerManager.LogAllConnectedPlayers();
+            Player client = PlayerManager.GetPlayerByName(Minecraft.getInstance().getUser().getName());
+            if (client == null || !event.getEntity().getUUID().equals(client.getUUID()))
                 return;
 
-            ExtendedPlayer.Reset();
+            PlayerManager.GetExtendedPlayerByPlayer(client).Reset(event.getEntity());
             Debug.Log (
-                    ExtendedPlayer.getPlayer(),
-                    ">> " + ExtendedPlayer.getPlayerName() + " Respawned"
+                    client,
+                    ">> " + client.getName().getString() + " respawned"
             );
         }
     }
@@ -63,9 +88,6 @@ public class ModEvents {
         }
         @SubscribeEvent
         public static void addCreativeTab(BuildCreativeModeTabContentsEvent event){
-            if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
-                event.accept(Halberd.HalberdItem);
-            }
         }
         @SubscribeEvent
         public static void commonSetup(final FMLCommonSetupEvent event) {
