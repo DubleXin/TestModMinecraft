@@ -11,7 +11,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.miraistd.testmod.Halberd.Halberd;
+import net.miraistd.testmod.Items.Halberd.Halberd;
 import net.miraistd.testmod.TestMod;
 import net.miraistd.testmod.client.ExtendedPlayer;
 import net.miraistd.testmod.client.gui.core.HUD;
@@ -65,7 +65,6 @@ public class ModEvents {
         public static void addCreativeTab(BuildCreativeModeTabContentsEvent event){
             if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
                 event.accept(Halberd.HalberdItem);
-                TestMod.sendMessageToChat("INGREDIENTS");
             }
         }
         @SubscribeEvent

@@ -1,4 +1,4 @@
-package net.miraistd.testmod.QuestionMarkBlock;
+package net.miraistd.testmod.Blocks.QuestionMarkBlock;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;

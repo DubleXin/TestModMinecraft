@@ -1,19 +1,23 @@
-package net.miraistd.testmod.Halberd;
+package net.miraistd.testmod.Items;
 
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import net.miraistd.testmod.TestMod;
 
-public class Halberd {
+import java.util.Dictionary;
+import java.util.Hashtable;
+
+public class ItemRegisterUtil {
+    Dictionary<String, Integer> ItemsDictionary = new Hashtable<>();
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, TestMod.MOD_ID);
-
-    public static RegistryObject<Item> HalberdItem = ITEMS.register("halberd",
-            ()-> new Item(new Item.Properties()));
-    public static void  register(IEventBus eventBus){
+    public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);
+    }
+    public ItemRegisterUtil(){
+        //ItemsDictionary.put("key", 80085);
+        //ItemsDictionary
     }
 }
