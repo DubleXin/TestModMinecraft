@@ -18,13 +18,12 @@ public class ItemRegisterUtil {
     private static HashMap<String, pair<RegistryObject<Item>, ICustomItem>> ItemsMap = new HashMap<>();
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, TestMod.MOD_ID);
-    private static void register(IEventBus eventBus){
+    public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);
     }
     public static void RegisterItem(action<? extends Item, Void> action, ICustomItem item) {
         ItemsMap.put(item.getName(),
                 new pair<>(ITEMS.register(item.getName(), ()-> action.Invoke(null)), item));
-        register(TestMod.getModEventBus());
     }
 
 }
