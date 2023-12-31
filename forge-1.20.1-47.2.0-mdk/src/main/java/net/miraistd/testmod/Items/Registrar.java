@@ -15,7 +15,7 @@ public class Registrar {
     }
 
     private static void registerToEventBus() {
-        ItemRegisterUtil.register(TestMod.getModEventBus());
+        ItemRegisterUtil.register(TestMod.ModEventBus);
     }
 
     private static void instantiateItems() {

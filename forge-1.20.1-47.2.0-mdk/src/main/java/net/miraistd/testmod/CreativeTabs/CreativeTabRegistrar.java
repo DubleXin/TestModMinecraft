@@ -31,7 +31,7 @@ public class CreativeTabRegistrar implements ICustomRegistrar {
                         .build());
 
 
-        register(TestMod.getModEventBus());
+        register(TestMod.ModEventBus);
     }
 
     private static void addAllItemsToTab(CreativeModeTab.Output output) {

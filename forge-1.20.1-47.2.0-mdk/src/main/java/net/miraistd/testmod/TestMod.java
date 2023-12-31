@@ -1,7 +1,6 @@
 package net.miraistd.testmod;
 
 import com.mojang.logging.LogUtils;
-import lombok.Getter;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -16,8 +15,7 @@ import org.slf4j.Logger;
 public class TestMod {
     public static final String MOD_ID = "testmod";
     public static final Logger LOGGER = LogUtils.getLogger();
-    @Getter
-    private static final IEventBus ModEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public static final IEventBus ModEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
     public TestMod() {
         Registrar.RegisterAll();
