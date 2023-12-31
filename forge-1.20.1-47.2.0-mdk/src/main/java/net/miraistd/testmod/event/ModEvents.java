@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.miraistd.testmod.TestMod;
+import net.miraistd.testmod.client.gui.core.HUD;
 import net.miraistd.testmod.player.PlayerManager;
 import net.miraistd.testmod.utils.Debug;
 
@@ -21,6 +22,9 @@ public class ModEvents {
             Player player = event.getEntity();
             PlayerManager.Connect(player.getName().getString(), player);
 
+            new HUD(PlayerManager.GetExtendedPlayerByPlayer(player));
+
+            //TODO change to packet
             String name = event.getEntity().getName().getString();
             Debug.LogAll (
                     new Player[]{event.getEntity()},
@@ -41,6 +45,7 @@ public class ModEvents {
 
             TestMod.LOGGER.info("LOGGED OUT >> {}", player.getName().getString());
 
+            //TODO change to packet
             String name = event.getEntity().getName().getString();
             Debug.LogAll (
                     new Player[]{event.getEntity()},
@@ -49,12 +54,17 @@ public class ModEvents {
         }
         @SubscribeEvent
         public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+            //Debug purposes
             PlayerManager.LogAllConnectedPlayers();
+
+            //TODO change to packet
             Player client = PlayerManager.GetPlayerByName(Minecraft.getInstance().getUser().getName());
             if (client == null || !event.getEntity().getUUID().equals(client.getUUID()))
                 return;
 
+            //TODO change to packet
             PlayerManager.GetExtendedPlayerByPlayer(client).Reset(event.getEntity());
+            //TODO change to packet
             Debug.Log (
                     client,
                     ">> " + client.getName().getString() + " respawned"

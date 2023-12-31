@@ -6,29 +6,40 @@ import net.miraistd.testmod.TestMod;
 import net.miraistd.testmod.client.gui.StatusData;
 import net.miraistd.testmod.player.PlayerManager;
 
-@Getter
 public class ExtendedPlayer {
+    @Getter
     private final String Name;
-    private Player Player;
+    @Getter
     private StatusData StatusData;
 
+    private Player _player;
+    public Player getPlayer(){
+        return _player;
+    }
+    public Player getPlayerSafe(){
+        if(_player == null)
+            _player = PlayerManager.GetPlayerByName(Name);
+
+        return _player;
+    }
+
     public ExtendedPlayer(Player player){
-        Player = player;
+        _player = player;
         Name = player.getName().getString();
-        StatusData = new StatusData(Player);
+        StatusData = new StatusData(_player);
         TestMod.LOGGER.info("STATUS DATA GENERATED FOR : {} >> AND IT'S HEALTH IS : {}", Name,
                 net.miraistd.testmod.client.gui.StatusData.getHealth());
     }
 
     public void Validate(){
-        if(Player == null)
-            Player = PlayerManager.GetPlayerByName(Name);
-        if(StatusData == null && Player != null)
-            StatusData = new StatusData(Player);
+        if(_player == null)
+            _player = PlayerManager.GetPlayerByName(Name);
+        if(StatusData == null && _player != null)
+            StatusData = new StatusData(_player);
     }
 
     public void Reset(Player player){
-        Player = player;
-        StatusData = new StatusData(Player);
+        _player = player;
+        StatusData = new StatusData(_player);
     }
 }
