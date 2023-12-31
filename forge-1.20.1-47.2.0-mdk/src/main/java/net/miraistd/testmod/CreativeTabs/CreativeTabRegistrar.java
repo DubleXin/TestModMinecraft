@@ -7,6 +7,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
+import net.miraistd.testmod.Blocks.BlockRegistrarUtil;
 import net.miraistd.testmod.Items.ItemRegisterUtil;
 import net.miraistd.testmod.TestMod;
 import net.miraistd.testmod.utils.ICustomRegistrar;
@@ -26,7 +27,11 @@ public class CreativeTabRegistrar implements ICustomRegistrar {
                 CreativeModeTab.builder().icon(() ->
                             new ItemStack(ItemRegisterUtil.getItemsMap().get("sapphire").getFirst().get()))
                         .title(Component.translatable("creativetab.ragnarok_all"))
-                        .displayItems((params, output) -> addAllItemsToTab(output)
+                        .displayItems((params, output) ->
+                                {
+                                    addAllItemsToTab(output);
+                                    addAllBlocksToTab(output);
+                                }
                         )
                         .build());
 
@@ -37,7 +42,15 @@ public class CreativeTabRegistrar implements ICustomRegistrar {
     private static void addAllItemsToTab(CreativeModeTab.Output output) {
         for (String itemName : ItemRegisterUtil.getItemsMap().keySet()){
             var item = ItemRegisterUtil.getItemsMap().get(itemName).getFirst().get();
+            if(itemName.equals("sapphire_block"))
+                continue;
             output.accept(item);
+        }
+    }
+    private static void addAllBlocksToTab(CreativeModeTab.Output output) {
+        for (String blockName : BlockRegistrarUtil.getBlockMap().keySet()){
+            var block = ItemRegisterUtil.getItemsMap().get(blockName).getFirst().get();
+            output.accept(block);
         }
     }
 }
