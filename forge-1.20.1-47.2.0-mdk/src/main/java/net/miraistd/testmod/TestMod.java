@@ -22,7 +22,7 @@ public class TestMod {
     public TestMod() {
         Registrar.RegisterAll();
         QuestionMarkBlock.register(ModEventBus);
-        CreativeTabRegistrar.RegisterAll();
+        CreativeTabRegistrar.registerAll();
         HUD.Register();
     }
 }
