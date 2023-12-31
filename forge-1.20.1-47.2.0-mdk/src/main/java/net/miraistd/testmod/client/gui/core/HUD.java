@@ -3,14 +3,30 @@ package net.miraistd.testmod.client.gui.core;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
+import net.miraistd.testmod.TestMod;
+import net.miraistd.testmod.client.ExtendedPlayer;
 import net.miraistd.testmod.client.gui.StatusData;
 import net.miraistd.testmod.client.gui.StatusHUD;
 import net.miraistd.testmod.player.PlayerManager;
 
 public class HUD {
-    public static StatusHUD StatusHUDInstance;
-    public static final IGuiOverlay RENDER = ((forgeGui, guiGraphics, v, i, i1) -> {
+
+    private final ExtendedPlayer _owner;
+    private final StatusHUD _statusHUD;
+
+    public HUD(ExtendedPlayer owner){
+        _owner = owner;
+        _statusHUD = new StatusHUD();
+
+        TestMod.ModEventBus.addListener(this::RegisterGuiOverlays);
+    }
+    public void RegisterGuiOverlays(RegisterGuiOverlaysEvent event){
+        event.registerAboveAll("mod_hud", HUD);
+    }
+
+    public final IGuiOverlay HUD = ((forgeGui, guiGraphics, v, i, i1) -> {
 
         final var extendedPlayer =
                 PlayerManager.GetExtendedPlayerByName(Minecraft.getInstance().getUser().getName());
@@ -22,12 +38,11 @@ public class HUD {
 
         //region STATUS HUD
 
-        final var statusHUD = StatusHUDInstance;
 
         //region CORE CACHE
 
-        final var pos = statusHUD.getPosition();
-        final var scale = statusHUD.getScale();
+        final var pos = _statusHUD.getPosition();
+        final var scale = _statusHUD.getScale();
 
         //endregion
 
@@ -62,8 +77,4 @@ public class HUD {
 
         //endregion
     });
-
-    public static void Register(){
-        StatusHUDInstance = new StatusHUD();
-    }
 }

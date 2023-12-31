@@ -1,13 +1,13 @@
 package net.miraistd.testmod;
 
 import com.mojang.logging.LogUtils;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.miraistd.testmod.Blocks.QuestionMarkBlock.QuestionMarkBlock;
 import net.miraistd.testmod.CreativeTabs.CreativeTabRegistrar;
 import net.miraistd.testmod.Items.Registrar;
-import net.miraistd.testmod.client.gui.core.HUD;
 import org.slf4j.Logger;
 
 
@@ -21,6 +21,7 @@ public class TestMod {
         Registrar.RegisterAll();
         QuestionMarkBlock.register(ModEventBus);
         CreativeTabRegistrar.registerAll();
-        HUD.Register();
+
+        MinecraftForge.EVENT_BUS.register(this);
     }
 }
