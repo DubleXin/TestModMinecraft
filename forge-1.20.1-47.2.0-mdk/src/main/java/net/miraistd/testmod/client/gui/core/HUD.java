@@ -2,34 +2,13 @@ package net.miraistd.testmod.client.gui.core;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
-import net.minecraftforge.common.MinecraftForge;
-import net.miraistd.testmod.TestMod;
-import net.miraistd.testmod.client.ExtendedPlayer;
 import net.miraistd.testmod.client.gui.StatusHUD;
-import net.miraistd.testmod.utils.Debug;
 import org.joml.Vector2f;
 
 public class HUD {
-    public HUD(ExtendedPlayer owner){
 
-        MinecraftForge.EVENT_BUS.register(this);
-        Debug.Log(owner.getPlayerSafe(), "registered to event bus");
-
-        //region RENDER
-        //endregion
-
-        //region REGISTRATION
-        TestMod.ModEventBus.addListener(
-                (RegisterGuiOverlaysEvent event) -> event.registerAboveAll("mod_hud", RENDER)
-        );
-
-        Debug.Log(owner.getPlayerSafe(), "registered listener");
-        //endregion
-    }
-
-    public final IGuiOverlay RENDER = ((forgeGui, guiGraphics, v, i, i1) -> {
+    public static final IGuiOverlay RENDER = ((forgeGui, guiGraphics, v, i, i1) -> {
 
         final var font = forgeGui.getFont();
 
@@ -74,7 +53,6 @@ public class HUD {
                 (int) (pos.y) + 18,
                 0x666666,
                 false);
-
         //endregion
     });
 

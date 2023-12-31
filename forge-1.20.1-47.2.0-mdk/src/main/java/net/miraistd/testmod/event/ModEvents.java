@@ -3,6 +3,7 @@ package net.miraistd.testmod.event;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,7 +23,6 @@ public class ModEvents {
             Player player = event.getEntity();
             PlayerManager.Connect(player.getName().getString(), player);
 
-            new HUD(PlayerManager.GetExtendedPlayerByPlayer(player));
 
             //TODO change to packet
             String name = event.getEntity().getName().getString();
@@ -56,7 +56,6 @@ public class ModEvents {
         public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
             //Debug purposes
             PlayerManager.LogAllConnectedPlayers();
-
             //TODO change to packet
             Player client = PlayerManager.GetPlayerByName(Minecraft.getInstance().getUser().getName());
             if (client == null || !event.getEntity().getUUID().equals(client.getUUID()))
@@ -80,6 +79,10 @@ public class ModEvents {
             // Some client setup code
             TestMod.LOGGER.info("HELLO FROM CLIENT SETUP");
             TestMod.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+        }
+        @SubscribeEvent
+        public static void RegisterGuiOverlays(RegisterGuiOverlaysEvent event) {
+            event.registerAboveAll("mod_hud", HUD.RENDER);
         }
         @SubscribeEvent
         public static void addCreativeTab(BuildCreativeModeTabContentsEvent event){
