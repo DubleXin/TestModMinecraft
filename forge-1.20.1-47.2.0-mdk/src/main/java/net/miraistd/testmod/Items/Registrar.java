@@ -2,6 +2,7 @@ package net.miraistd.testmod.Items;
 
 import net.miraistd.testmod.Blocks.BlockRegistrarUtil;
 import net.miraistd.testmod.Blocks.SupphireBlock.SapphireBlock;
+import net.miraistd.testmod.Items.DebugItem.DebugItem;
 import net.miraistd.testmod.Items.Halberd.Halberd;
 import net.miraistd.testmod.Items.Sapphire.RawSapphire;
 import net.miraistd.testmod.Items.Sapphire.Sapphire;
@@ -26,6 +27,7 @@ public class Registrar {
     }
 
     private static void instantiateItems() {
+        new DebugItem().registerSelf();
         new Halberd().registerSelf();
         new Sapphire().registerSelf();
         new RawSapphire().registerSelf();

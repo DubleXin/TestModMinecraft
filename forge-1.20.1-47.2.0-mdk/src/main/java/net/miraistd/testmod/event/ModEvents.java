@@ -6,10 +6,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.miraistd.testmod.Items.ItemRegisterUtil;
 import net.miraistd.testmod.TestMod;
 import net.miraistd.testmod.client.gui.core.HUD;
 import net.miraistd.testmod.player.PlayerManager;
@@ -18,6 +20,12 @@ import net.miraistd.testmod.utils.Debug;
 public class ModEvents {
     @Mod.EventBusSubscriber(modid = TestMod.MOD_ID)
     public static class ForgeEvents{
+        //TODO:make actual interface for subscriptions on player events
+        @SubscribeEvent
+        public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
+        if (event.getItemStack().getItem() == ItemRegisterUtil.getItemsMap().get("debug_item").getFirst().get())
+            Debug.LogAll(new Player[0], "test");
+        }
         @SubscribeEvent
         public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
             Player player = event.getEntity();
