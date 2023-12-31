@@ -2,6 +2,6 @@
   "item.testmod.halberd": "Halberd",
   "item.testmod.sapphire": "Sapphire",
   "item.testmod.raw_sapphire": "Raw Sapphire",
-
+  "block.testmod.sapphire_block" : "Sapphire BLock",
   "creativetab.ragnarok_all": "Test Mod Tab"
 }

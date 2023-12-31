@@ -2,11 +2,11 @@ package net.miraistd.testmod.Items.Halberd;
 
 import lombok.Getter;
 import net.minecraft.world.item.Item;
-import net.miraistd.testmod.Items.ICustomItem;
+import net.miraistd.testmod.Items.ICustomStaticEntity;
 import net.miraistd.testmod.Items.ItemRegisterUtil;
 
 @Getter
-public class Halberd implements ICustomItem {
+public class Halberd implements ICustomStaticEntity {
     public final String Name;
     public Halberd(){
         Name = "halberd";
