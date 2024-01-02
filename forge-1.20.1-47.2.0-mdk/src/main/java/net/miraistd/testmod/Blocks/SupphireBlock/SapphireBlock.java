@@ -26,13 +26,13 @@ public class SapphireBlock implements ICustomStaticEntity {
     public void registerSelf() {
         BlockRegistrarUtil.RegisterBlock(
                 (Void) ->
-                        new Block(BlockBehaviour.Properties.copy(Blocks.DIAMOND_BLOCK).sound(SoundType.AMETHYST))
+                        new Block(BlockBehaviour.Properties.copy(Blocks.DIAMOND_BLOCK)
+                                .sound(SoundType.AMETHYST)
+                                .destroyTime(1)
+                                .requiresCorrectToolForDrops()
+                        )
                 , this
         );
-        ItemRegisterUtil.RegisterItem(
-                (Void) ->
-                    new BlockItem(BlockRegistrarUtil.getBlockMap().get(_name).getFirst().get() , new Item.Properties())
-                , this
-        );
+
     }
 }
