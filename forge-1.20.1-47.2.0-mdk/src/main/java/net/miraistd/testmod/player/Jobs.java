@@ -1,4 +1,4 @@
-package net.miraistd.testmod.client.gui;
+package net.miraistd.testmod.player;
 
 import lombok.Getter;
 

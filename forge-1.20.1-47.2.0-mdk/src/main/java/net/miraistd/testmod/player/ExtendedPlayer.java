@@ -4,8 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.miraistd.testmod.client.gui.Jobs;
-import net.miraistd.testmod.client.gui.StatusData;
+
 @Getter
 public class ExtendedPlayer {
     @Setter

@@ -7,6 +7,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -28,7 +30,6 @@ import net.miraistd.testmod.networking.packet.PlayerHealthBridgeSyncS2CPacket;
 import net.miraistd.testmod.player.ExtendedPlayer;
 import net.miraistd.testmod.player.ExtendedPlayerProvider;
 import net.miraistd.testmod.utils.Debug;
-
 public class ModEvents {
     @Mod.EventBusSubscriber(modid = TestMod.MOD_ID)
     public static class ForgeEvents{
@@ -120,6 +121,16 @@ public class ModEvents {
                 });
             }
 
+        }
+        @SubscribeEvent
+        public static void onGameOverlayRenderPre(RenderGuiOverlayEvent.Pre event){
+            ResourceLocation overlay = event.getOverlay().id();
+            if (VanillaGuiOverlay.EXPERIENCE_BAR.id() == overlay)
+                event.setCanceled(true);
+            else if (VanillaGuiOverlay.FOOD_LEVEL.id() == overlay)
+                event.setCanceled(true);
+            else if (VanillaGuiOverlay.PLAYER_HEALTH.id() == overlay)
+                event.setCanceled(true);
         }
     }
 
