@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.miraistd.testmod.client.gui.StatusHUD;
-import org.joml.Vector2f;
+import net.miraistd.testmod.player.ClientExtendedPlayerData;
 
 public class HUD {
 
@@ -21,38 +21,40 @@ public class HUD {
 
         //region CORE CACHE
 
-        final var pos = new Vector2f(0,0);//statusHUD.getPosition();
-        final var scale = 1f;//statusHUD.getScale();
+        final var pos = statusHUD.getPosition();
+        final var scale = statusHUD.getScale();
 
         //endregion
 
         //region STATUS DATA CACHE
 
-        //final var statusData = owner.getStatusData();
+        final var extendedPlayer = ClientExtendedPlayerData.getData();
+        if(extendedPlayer != null){
+            final var statusData = extendedPlayer.getStatusData();
 
-       // final var levelingData = statusData.getLevelingData();
-        final var health = 200; //StatusData.getHealth();
-       // final var mana = statusData.getMana();
+            final var health =  ClientExtendedPlayerData.getHealth();
+            final var mana = extendedPlayer.getMana();
 
-        //endregion
+            //endregion
 
-        // Background
-        RenderSystem.setShaderTexture(0, StatusHUD.BACKGROUND);
-        guiGraphics.blit(StatusHUD.BACKGROUND,
-                (int) (pos.x),
-                (int) (pos.y),
-                0,
-                0,
-                (int) (140 * scale), (int) (60 * scale),
-                (int) (140 * scale), (int) (60 * scale));
+            // Background
+            RenderSystem.setShaderTexture(0, StatusHUD.BACKGROUND);
+            guiGraphics.blit(StatusHUD.BACKGROUND,
+                    (int) (pos.x),
+                    (int) (pos.y),
+                    0,
+                    0,
+                    (int) (140 * scale), (int) (60 * scale),
+                    (int) (140 * scale), (int) (60 * scale));
 
-        // HealthBar
-        guiGraphics.drawString(font,
-                "HP / " + (int) (health * 10),
-                (int) (pos.x) + 12,
-                (int) (pos.y) + 18,
-                0x666666,
-                false);
+            // HealthBar
+            guiGraphics.drawString(font,
+                    "HP / " +  (int)(health * 10),
+                    (int) (pos.x) + 12,
+                    (int) (pos.y) + 18,
+                    0x666666,
+                    false);
+        }
         //endregion
     });
 

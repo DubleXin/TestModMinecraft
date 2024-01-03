@@ -2,7 +2,6 @@ package net.miraistd.testmod.utils;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-import net.miraistd.testmod.player.PlayerManager;
 
 public class Debug {
     public static void Log(Player receiver, String text){
@@ -13,6 +12,7 @@ public class Debug {
     }
 
     public static void LogAll(Player[] excludedReceivers, String text){
-        PlayerManager.SendMessageToAll(excludedReceivers, text);
+        //TODO to packet
+        //PlayerManager.SendMessageToAll(excludedReceivers, text);
     }
 }

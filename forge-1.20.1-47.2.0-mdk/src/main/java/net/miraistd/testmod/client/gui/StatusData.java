@@ -1,24 +1,45 @@
 package net.miraistd.testmod.client.gui;
 
 import lombok.Getter;
-import net.minecraft.world.entity.player.Player;
-import net.miraistd.testmod.client.LevelingData;
+
+import java.io.*;
 
 @Getter
-public class StatusData {
-    private static Player _player;
+public class StatusData implements Serializable {
 
-    private LevelingData LevelingData;
-    private float Mana;
+    private Jobs Job;
 
-    public static float getHealth() {
-        if(_player == null)
-            return 0;
-        return _player.getHealth();
+    private int Level;
+    private float Experience;
+
+    private int JobLevel;
+    private float JobExperience;
+
+    private int SpareStatPoints;
+    private int SpareAbilityPoints;
+
+    public StatusData(Jobs job, int level, float experience, int jobLevel,
+                      float jobExperience, int spareStatPoints,
+                      int spareAbilityPoints) {
+        Job = job;
+
+        Level = level;
+        Experience = experience;
+        JobLevel = jobLevel;
+        JobExperience = jobExperience;
+        SpareStatPoints = spareStatPoints;
+        SpareAbilityPoints = spareAbilityPoints;
+    }
+    public StatusData() {
+        Job = Jobs.Novice;
+
+        Level = 1;
+        Experience = 0;
+        JobLevel = 1;
+        JobExperience = 0;
+        SpareStatPoints = 0;
+        SpareAbilityPoints = 0;
     }
 
-    public StatusData(Player player) {
-        _player = player;
-    }
 }
 
