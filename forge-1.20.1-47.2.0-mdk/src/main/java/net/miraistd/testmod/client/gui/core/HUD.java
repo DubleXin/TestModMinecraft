@@ -1,16 +1,23 @@
 package net.miraistd.testmod.client.gui.core;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.miraistd.testmod.client.gui.StatusHUD;
 import net.miraistd.testmod.player.ClientExtendedPlayerData;
 
-public class HUD {
-    public static final IGuiOverlay RENDER = ((forgeGui, guiGraphics, v, i, i1) -> {
+import java.util.function.Function;
 
-        //region VANILLA BLOCK
-        //endregion
+public class HUD {
+    // Assuming you have a ResourceLocation and a FontSet instance to pass as arguments
+    private static final ResourceLocation myResourceLocation = new ResourceLocation("font/arian_font");
+    public static final Font FONT = new Font((ResourceLocation rs) ->
+    new FontSet(Minecraft.getInstance().textureManager, myResourceLocation ), true);
+    public static final IGuiOverlay RENDER = ((forgeGui, guiGraphics, v, i, i1) -> {
 
         final var font = forgeGui.getFont();
 
