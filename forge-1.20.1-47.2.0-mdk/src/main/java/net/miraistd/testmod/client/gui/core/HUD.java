@@ -15,7 +15,7 @@ import java.util.function.Function;
 public class HUD {
     // Assuming you have a ResourceLocation and a FontSet instance to pass as arguments
     private static final ResourceLocation myResourceLocation = new ResourceLocation("font/arian_font");
-    public static final Font FONT = new Font((ResourceLocation rs) ->
+    public static final Font FONT = new Font(s ->
     new FontSet(Minecraft.getInstance().textureManager, myResourceLocation ), true);
     public static final IGuiOverlay RENDER = ((forgeGui, guiGraphics, v, i, i1) -> {
 
