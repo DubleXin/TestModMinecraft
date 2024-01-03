@@ -3,7 +3,6 @@ package net.miraistd.testmod.networking.packet;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import net.miraistd.testmod.TestMod;
 import net.miraistd.testmod.networking.Messenger;
 import net.miraistd.testmod.player.ClientExtendedPlayerData;
 
@@ -32,7 +31,6 @@ public class PlayerHealthBridgeSyncS2CPacket {
         context.enqueueWork(() -> {
             ClientExtendedPlayerData.setHealth(health);
             Messenger.sendToClient(new PlayerHealthBridgeSyncS2CPacket(health), player);
-            TestMod.LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>packet sent, ANOTHER ONE: {}", health);
         });
         return true;
     }

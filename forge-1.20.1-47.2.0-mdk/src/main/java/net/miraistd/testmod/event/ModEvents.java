@@ -109,12 +109,12 @@ public class ModEvents {
         public static void onRegisterCapabilities(RegisterCapabilitiesEvent event){
             event.register(ExtendedPlayer.class);
         }
-
         @SubscribeEvent
         public static void onPlayerTick(TickEvent.PlayerTickEvent event){
             if(event.side == LogicalSide.SERVER){
                 event.player.getCapability(ExtendedPlayerProvider.EXTENDED_PLAYER).ifPresent(data -> {
                     data.setMana(event.player.getRandom().nextFloat());
+
                     Messenger.sendToClient(new ExtendedPlayerSyncS2CPacket(data), (ServerPlayer) event.player);
                     Messenger.sendToClient(new PlayerHealthBridgeSyncS2CPacket(event.player.getHealth()), (ServerPlayer) event.player);
                 });
