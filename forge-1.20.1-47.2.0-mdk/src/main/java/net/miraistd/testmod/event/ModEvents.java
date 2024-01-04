@@ -26,7 +26,7 @@ import net.miraistd.testmod.TestMod;
 import net.miraistd.testmod.client.gui.core.HUD;
 import net.miraistd.testmod.networking.Messenger;
 import net.miraistd.testmod.networking.packet.ExtendedPlayerSyncS2CPacket;
-import net.miraistd.testmod.networking.packet.PlayerHealthBridgeSyncS2CPacket;
+import net.miraistd.testmod.networking.packet.PlayerResourcesBridgeSyncS2CPacket;
 import net.miraistd.testmod.player.ExtendedPlayer;
 import net.miraistd.testmod.player.ExtendedPlayerProvider;
 import net.miraistd.testmod.utils.Debug;
@@ -113,11 +113,18 @@ public class ModEvents {
         @SubscribeEvent
         public static void onPlayerTick(TickEvent.PlayerTickEvent event){
             if(event.side == LogicalSide.SERVER){
+                final var experienceNeeded = event.player.getXpNeededForNextLevel();
                 event.player.getCapability(ExtendedPlayerProvider.EXTENDED_PLAYER).ifPresent(data -> {
                     data.setMana(event.player.getRandom().nextFloat());
 
                     Messenger.sendToClient(new ExtendedPlayerSyncS2CPacket(data), (ServerPlayer) event.player);
-                    Messenger.sendToClient(new PlayerHealthBridgeSyncS2CPacket(event.player.getHealth()), (ServerPlayer) event.player);
+                    Messenger.sendToClient(new PlayerResourcesBridgeSyncS2CPacket(
+                            event.player.getName().getString(),
+                            event.player.getHealth(),
+                            event.player.getFoodData().getFoodLevel(),
+                            event.player.experienceLevel,
+                            event.player.experienceProgress
+                            ), (ServerPlayer) event.player);
                 });
             }
 

@@ -8,7 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 @Getter
 public class ExtendedPlayer {
     @Setter
-    float mana;
+    private float mana;
 
     private StatusData statusData;
 
