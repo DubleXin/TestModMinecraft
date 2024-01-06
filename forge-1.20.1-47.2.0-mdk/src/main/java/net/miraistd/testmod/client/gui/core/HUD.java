@@ -38,12 +38,18 @@ public class HUD {
 
             //region STATUS DATA CACHE
 
-            final var extendedPlayer = ClientExtendedPlayerData.getData();
+            final var extendedPlayer = ClientExtendedPlayerData.getDATA();
             if(extendedPlayer != null){
                 final var statusData = extendedPlayer.getStatusData();
 
                 final var healthPercentage =  ClientExtendedPlayerData.getHealth() / 20f;
                 final var manaPercentage = extendedPlayer.getMana() / 1f;
+
+                final var levelPercentage = statusData.getLevelPercentage();
+                final var jobLevelPercentage = statusData.getJobLevelPercentage();
+
+                final var level = statusData.getLevel();
+                final var jobLevel = statusData.getJobLevel();
 
             //endregion
 
@@ -114,14 +120,14 @@ public class HUD {
                 //region Level
 
                 drawBar(false, guiGraphics,
-                        1, 54,
+                        levelPercentage, 54,
                         2, 3, new Vector2f(36, 43),
                         statusHUD);
 
                 //TODO make font and re-implement
                 guiGraphics.drawString(
                         forgeGui.getFont(),
-                        "100%",
+                        (int)(levelPercentage * 100) + "%",
                         (int) pos.x + 38 + 54,
                         (int) pos.y + 43,
                         0x666666,
@@ -130,7 +136,7 @@ public class HUD {
                 //TODO make font and re-implement
                 guiGraphics.drawString(
                         forgeGui.getFont(),
-                        "" + (statusData.getLevel()),
+                        "" + (level),
                         (int) pos.x + 26,
                         (int) pos.y + 43,
                         0x666666,
@@ -140,14 +146,14 @@ public class HUD {
                 //region JobLevel
 
                 drawBar(false, guiGraphics,
-                        1, 54,
+                        jobLevelPercentage, 54,
                         2, 3, new Vector2f(36, 49),
                         statusHUD);
 
                 //TODO make font and re-implement
                 guiGraphics.drawString(
                         forgeGui.getFont(),
-                        "100%",
+                        (int)(jobLevelPercentage * 100) + "%",
                         (int) pos.x + 38 + 54,
                         (int) pos.y + 49,
                         0x666666,
@@ -156,7 +162,7 @@ public class HUD {
                 //TODO make font and re-implement
                 guiGraphics.drawString(
                         forgeGui.getFont(),
-                        "" + (statusData.getJobLevel()),
+                        "" + (jobLevel),
                         (int) pos.x + 26,
                         (int) pos.y + 49,
                         0x666666,

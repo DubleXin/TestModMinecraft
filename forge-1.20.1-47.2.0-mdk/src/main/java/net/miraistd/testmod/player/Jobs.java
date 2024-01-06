@@ -3,29 +3,52 @@ package net.miraistd.testmod.player;
 import lombok.Getter;
 
 @Getter
-public enum Jobs{
-    Novice(0), HighNovice(1), SuperNovice(2),
-    Swordsman(3), Mage(4), Archer(5), Merchant(6),
-    Thief(7), Acolyte(8), Knight(9), Crusader(10),
-    Wizard(11), Sage(12), Hunter(13), Bard(14),
-    Dancer(15), Blacksmith(16), Alchemist(17), Assassin(18),
-    Rogue(19), Priest(20), Monk(21), LordKnight(22),
-    Paladin(23), HighWizard(24), Scholar(25), Sniper(26),
-    Minstrel(27), Gypsy(28), Mastersmith(29), Biochemist(30),
-    AssassinCross(31), Stalker(32), HighPriest(33), Champion(34),
-    RuneKnight(35), RoyalGuard(36), DragonKnight(37), ImperialGuard(38),
-    Warlock(39), Sorcerer(40), ArchMage(41), ElementalMaster(42),
-    Ranger(43), Maestro(44), Wanderer(45), WindHawk(46), Troubadour(47),
-    Trouvere(48), Mechanic(49), Geneticist(50), Meister(51), Biolo(52),
-    GuillotineCross(53), ShadowChaser(54), ShadowCross(55), AbyssChaser(56),
-    ArchBishop(57), Sura(58), Cardinal(59), Inquisitor(60),
-    TaeKwonKid(61), Ninja(62), Gunslinger(63), SoulLinker(64),
-    TaeKwonMaster(65), SoulReaper(66), StarEmperor(67), Kagerou(68),
-    Oboro(69), Rebel(70);
+public enum Jobs {
+
+    // region 1st Jobs
+    Novice(0), Swordsman(1), Mage(2), Archer(3), Merchant(4), Thief(5), Acolyte(6), // endregion
+
+    // region 2nd Jobs
+    HighNovice(20), Knight(21), Crusader(22), Wizard(23), Sage(24), Hunter(25), Bard(26),
+    Dancer(27), Blacksmith(28), Alchemist(29), Assassin(30), Rogue(31), Priest(32), Monk(33), // endregion
+
+    // region Expert Jobs
+    ExpertNovice(40), LordKnight(41), Paladin(42), HighWizard(43), Scholar(44), Sniper(45),
+    Minstrel(46), Gypsy(47), Mastersmith(48), Biochemist(49), AssassinCross(50), Stalker(51),
+    HighPriest(52), Champion(53), // endregion
+
+    // region 3rd Jobs
+    SuperNovice(60), RuneKnight(61), Warlock(62), Sorcerer(63), Ranger(64), Maestro(65),
+    Wanderer(66), Mechanic(67), Geneticist(68), GuillotineCross(69), ShadowChaser(70),
+    ArchBishop(71), Sura(72), // endregion
+
+    // region 4th Jobs
+    UltraNovice(80), RoyalGuard(81), DragonKnight(82), ArchMage(83), ElementalMaster(84),
+    WindHawk(85), Troubadour(86), Trouvere(87), Meister(88), Biolo(89), ShadowCross(90),
+    AbyssChaser(91), Cardinal(92), Inquisitor(93), // endregion
+
+    // region Expanded 1st Jobs
+    TaeKwonKid(100), Ninja(101), Gunslinger(102), // endregion
+
+    // region Expanded 2nd Jobs
+    SoulLinker(120), TaeKwonMaster(121), Kagerou(122), Oboro(123), Rebel(124), // endregion
+
+    // region Expanded 3rd Jobs
+    SoulReaper(140), StarEmperor(141); // endregion
 
     private final int value;
-    private Jobs(int value) {
-        this.value = value;
-    }
+    private final JobLevel jobLevel;
 
+    Jobs(int v) {
+        this.value = v;
+        jobLevel = v < 20? JobLevel.FIRST :
+                   v < 40? JobLevel.SECOND :
+                   v < 60? JobLevel.EXPERT :
+                   v < 80? JobLevel.THIRD :
+                   v < 100? JobLevel.FOURTH :
+                   v < 120? JobLevel.EXPANDED_FIRST :
+                   v < 140? JobLevel.EXPANDED_SECOND :
+                            JobLevel.EXPANDED_THIRD;
+    }
 }
+

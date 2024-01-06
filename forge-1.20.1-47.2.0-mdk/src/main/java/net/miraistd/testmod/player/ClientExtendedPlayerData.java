@@ -5,7 +5,16 @@ import lombok.Setter;
 
 public class ClientExtendedPlayerData {
     //mod data
-    @Getter @Setter private static ExtendedPlayer data;
+    @Getter private static ExtendedPlayer DATA;
+
+    public static void setDATA(ExtendedPlayer data){
+        if(DATA == null)
+            DATA = data;
+
+        else {
+            DATA.setMana(data.getMana());
+        }
+    }
 
     //base data
     @Getter @Setter private static String name;

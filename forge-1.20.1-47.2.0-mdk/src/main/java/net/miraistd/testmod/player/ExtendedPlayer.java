@@ -14,6 +14,8 @@ public class ExtendedPlayer {
 
     public ExtendedPlayer(){
         statusData = new StatusData();
+        //TODO change to stat computation
+        this.mana = 1;
     }
 
     public ExtendedPlayer(float mana, StatusData statusData){

@@ -14,6 +14,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,7 +25,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.miraistd.testmod.Items.ItemRegisterUtil;
 import net.miraistd.testmod.TestMod;
 import net.miraistd.testmod.client.gui.core.HUD;
+import net.miraistd.testmod.entity.core.IRagnarokMob;
 import net.miraistd.testmod.networking.Messenger;
+import net.miraistd.testmod.networking.packet.ExperienceGainS2CPacket;
 import net.miraistd.testmod.networking.packet.ExtendedPlayerSyncS2CPacket;
 import net.miraistd.testmod.networking.packet.PlayerResourcesBridgeSyncS2CPacket;
 import net.miraistd.testmod.player.ExtendedPlayer;
@@ -112,22 +115,29 @@ public class ModEvents {
         }
         @SubscribeEvent
         public static void onPlayerTick(TickEvent.PlayerTickEvent event){
-            if(event.side == LogicalSide.SERVER){
-                final var experienceNeeded = event.player.getXpNeededForNextLevel();
-                event.player.getCapability(ExtendedPlayerProvider.EXTENDED_PLAYER).ifPresent(data -> {
-                    data.setMana(event.player.getRandom().nextFloat());
+            if(event.side != LogicalSide.SERVER)
+                return;
 
-                    Messenger.sendToClient(new ExtendedPlayerSyncS2CPacket(data), (ServerPlayer) event.player);
-                    Messenger.sendToClient(new PlayerResourcesBridgeSyncS2CPacket(
-                            event.player.getName().getString(),
-                            event.player.getHealth(),
-                            event.player.getFoodData().getFoodLevel(),
-                            event.player.experienceLevel,
-                            event.player.experienceProgress
-                            ), (ServerPlayer) event.player);
-                });
+            event.player.getCapability(ExtendedPlayerProvider.EXTENDED_PLAYER).ifPresent(data -> {
+                Messenger.sendToClient(new ExtendedPlayerSyncS2CPacket(data), (ServerPlayer) event.player);
+                Messenger.sendToClient(new PlayerResourcesBridgeSyncS2CPacket(
+                        event.player.getName().getString(),
+                        event.player.getHealth(),
+                        event.player.getFoodData().getFoodLevel(),
+                        event.player.experienceLevel,
+                        event.player.experienceProgress
+                        ), (ServerPlayer) event.player);
+            });
+        }
+        @SubscribeEvent
+        public static void onLivingDeath(LivingDeathEvent event){
+            if(event.getSource().getEntity() instanceof Player){
+                var entity = event.getEntity();
+                Messenger.sendToClient(new ExperienceGainS2CPacket(
+                        entity instanceof IRagnarokMob? ((IRagnarokMob) entity).getOnKillExperience() : 1,
+                        entity instanceof IRagnarokMob? ((IRagnarokMob) entity).getOnKillJobExperience() : 1),
+                        (ServerPlayer)event.getSource().getEntity());
             }
-
         }
         @SubscribeEvent
         public static void onGameOverlayRenderPre(RenderGuiOverlayEvent.Pre event){

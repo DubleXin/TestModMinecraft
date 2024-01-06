@@ -3,7 +3,6 @@ package net.miraistd.testmod.networking.packet;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import net.miraistd.testmod.TestMod;
 import net.miraistd.testmod.networking.Messenger;
 import net.miraistd.testmod.player.ClientExtendedPlayerData;
 import net.miraistd.testmod.player.ExtendedPlayer;
@@ -40,11 +39,9 @@ public class ExtendedPlayerSyncS2CPacket {
         NetworkEvent.Context context = supplier.get();
         ServerPlayer player = context.getSender();
         context.enqueueWork(() -> {
-            ClientExtendedPlayerData.setData(data);
-            Messenger.sendToClient(new ExtendedPlayerSyncS2CPacket(data), player);
-            TestMod.LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>packet sent, AND MANA HERE EQUALS TO THESE PERFECT (insidius): {}", data.getMana());
+            ClientExtendedPlayerData.setDATA(data);
+            Messenger.sendToClient(new ExtendedPlayerSyncS2CPacket(ClientExtendedPlayerData.getDATA()), player);
         });
-        TestMod.LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>packet sent, AND MANA HERE EQUALS TO THESE PERFECT: {}", data.getMana());
         return true;
     }
 }

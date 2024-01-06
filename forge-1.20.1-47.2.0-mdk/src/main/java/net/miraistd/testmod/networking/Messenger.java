@@ -7,6 +7,7 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.miraistd.testmod.TestMod;
+import net.miraistd.testmod.networking.packet.ExperienceGainS2CPacket;
 import net.miraistd.testmod.networking.packet.ExtendedPlayerSyncS2CPacket;
 import net.miraistd.testmod.networking.packet.PlayerResourcesBridgeSyncS2CPacket;
 
@@ -36,6 +37,12 @@ public class Messenger {
                 .decoder(PlayerResourcesBridgeSyncS2CPacket::new)
                 .encoder(PlayerResourcesBridgeSyncS2CPacket::toBytes)
                 .consumerMainThread(PlayerResourcesBridgeSyncS2CPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(ExperienceGainS2CPacket.class, id(), NetworkDirection.PLAY_TO_CLIENT)
+                .decoder(ExperienceGainS2CPacket::new)
+                .encoder(ExperienceGainS2CPacket::toBytes)
+                .consumerMainThread(ExperienceGainS2CPacket::handle)
                 .add();
     }
 
